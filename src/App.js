@@ -1,6 +1,6 @@
 import "./App.css";
 import "rsuite/dist/styles/rsuite-default.css";
-import { Button, ButtonToolbar, Loader, Modal } from "rsuite";
+import { Button, ButtonToolbar, Modal } from "rsuite";
 import React from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 
@@ -79,7 +79,6 @@ class App extends React.Component {
         <div className="ArticleContent">
           <BrowserRouter>
             {Object.keys(localStorage).map((key) => {
-              console.log(key);
               return (
                 <Route exact path={key}>
                   <div className="ArticleTitle">{key}</div>
