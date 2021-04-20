@@ -32,7 +32,7 @@ class App extends React.Component {
   }
 
   close() {
-    localStorage.setItem("/" + this.state.titleContent, this.state.textContent);
+    localStorage.setItem(this.state.titleContent, this.state.textContent);
     this.setState({ show: false });
   }
 
@@ -75,13 +75,13 @@ class App extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
+
         <div className="ArticleContent">
           <BrowserRouter>
             {Object.keys(localStorage).map((key) => {
               console.log(key);
               return (
                 <Route exact path={key}>
-                  <Loader></Loader>
                   <div className="ArticleTitle">{key}</div>
                   <div className="ArticleText">{localStorage[key]}</div>
                 </Route>
