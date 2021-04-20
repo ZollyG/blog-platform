@@ -75,9 +75,8 @@ class App extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-
-        <div className="ArticleContent">
-          <BrowserRouter>
+        <BrowserRouter>
+          <div className="ArticleContent">
             {Object.keys(localStorage).map((key) => {
               return (
                 <Route exact path={"/" + key}>
@@ -86,15 +85,13 @@ class App extends React.Component {
                 </Route>
               );
             })}
-          </BrowserRouter>
-        </div>
-        <div className="ArticleList">
-          <BrowserRouter>
+          </div>
+          <div className="ArticleList">
             {Object.keys(localStorage).map((key) => {
               return <Link to={"/" + key}>{key}</Link>;
             })}
-          </BrowserRouter>
-        </div>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
