@@ -80,7 +80,7 @@ class App extends React.Component {
           <BrowserRouter>
             {Object.keys(localStorage).map((key) => {
               return (
-                <Route exact path={key}>
+                <Route exact path={"/" + key}>
                   <div className="ArticleTitle">{key}</div>
                   <div className="ArticleText">{localStorage[key]}</div>
                 </Route>
