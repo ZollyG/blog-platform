@@ -1,6 +1,6 @@
 import "./App.css";
 import "rsuite/dist/styles/rsuite-default.css";
-import { Button, ButtonToolbar, Modal } from "rsuite";
+import { Button, ButtonToolbar, Modal, Alert } from "rsuite";
 import React from "react";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 
@@ -11,6 +11,8 @@ class App extends React.Component {
     this.open = this.open.bind(this);
     this.titleChange = this.titleChange.bind(this);
     this.textChange = this.textChange.bind(this);
+    this.closeNoResult = this.closeNoResult.bind(this);
+    this.nukeLocal = this.nukeLocal.bind(this);
 
     this.state = {
       show: false,
@@ -23,6 +25,7 @@ class App extends React.Component {
       titleContent: this.state.titleContent,
     });
   }
+
   titleChange(event) {
     this.setState({
       show: this.state.show,
@@ -31,8 +34,20 @@ class App extends React.Component {
     });
   }
 
+  nukeLocal() {
+    Alert.error("localStorage has been nuked!");
+    localStorage.clear();
+    this.forceUpdate();
+  }
+
   close() {
+    Alert.success("Article Posted!");
     localStorage.setItem(this.state.titleContent, this.state.textContent);
+    this.setState({ show: false });
+  }
+
+  closeNoResult() {
+    Alert.warning("No article posted!");
     this.setState({ show: false });
   }
 
@@ -46,50 +61,71 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Blog platform</h1>
-
-        <ButtonToolbar>
-          <Button appearance="primary">Home</Button>
-          <Button onClick={this.open} color="orange">
-            Create new blogpost
-          </Button>
-        </ButtonToolbar>
-
-        <Modal show={this.state.show} onHide={this.close}>
-          <Modal.Header>
-            <Modal.Title>Create new blogpost</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Article title</p>
-            <textarea className="TitleText" onChange={this.titleChange}></textarea>
-            <hr />
-            <p>Article content</p>
-            <textarea className="ContentText" onChange={this.textChange}></textarea>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.close} appearance="primary">
-              OK
-            </Button>
-            <Button onClick={this.close} appearance="subtle">
-              Cancel
-            </Button>
-          </Modal.Footer>
-        </Modal>
         <BrowserRouter>
-          <div className="ArticleContent">
-            {Object.keys(localStorage).map((key) => {
-              return (
-                <Route exact path={"/" + key}>
-                  <div className="ArticleTitle">{key}</div>
-                  <div className="ArticleText">{localStorage[key]}</div>
-                </Route>
-              );
-            })}
+          <div className="ButtonsAndTitle">
+            <div className="WebTitle">Blog platform</div>
+            <ButtonToolbar className="Buttons">
+              <Button appearance="primary">
+                <Link className="LinkHome" to={"/"}>
+                  Home
+                </Link>
+              </Button>
+              <Button onClick={this.open} color="orange">
+                Create new blogpost
+              </Button>
+              <Button color="red" onClick={this.nukeLocal}>
+                Delete all blogposts
+              </Button>
+            </ButtonToolbar>
           </div>
-          <div className="ArticleList">
-            {Object.keys(localStorage).map((key) => {
-              return <Link to={"/" + key}>{key}</Link>;
-            })}
+          <Modal show={this.state.show} onHide={this.closeNoResult}>
+            <Modal.Header>
+              <Modal.Title>Create new blogpost</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Article title</p>
+              <textarea className="TitleText" onChange={this.titleChange}></textarea>
+              <hr />
+              <p>Article content</p>
+              <textarea className="ContentText" onChange={this.textChange}></textarea>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                onClick={() => {
+                  this.close();
+                }}
+                appearance="primary"
+              >
+                OK
+              </Button>
+              <Button onClick={this.closeNoResult} appearance="subtle">
+                Cancel
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <div className="ArticleZone">
+            <div className="ArticleContent">
+              {Object.keys(localStorage).map((key) => {
+                return (
+                  <Route exact path={"/" + key}>
+                    <h1 className="ArticleTitle">{key}</h1>
+                    <div className="ArticleText">{localStorage[key]}</div>
+                  </Route>
+                );
+              })}
+            </div>
+
+            <div className="ArticleList">
+              <h3>Other articles</h3>
+              {Object.keys(localStorage).map((key) => {
+                return (
+                  <Link className="LinkAppearance" to={"/" + key}>
+                    {key}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </BrowserRouter>
       </div>

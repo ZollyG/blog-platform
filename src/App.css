@@ -1,28 +1,77 @@
 .App {
-  background-color: white;
+  background-color: ;
   margin-left: 2.5%;
   margin-right: 2.5%;
   color: darkgoldenrod;
-  display: flex;
+  background-color: lightgreen;
+  min-height: 98vh;
   border-radius: 4px;
-
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding-bottom: 1%;
 }
 
+.ArticleZone {
+  display: flex;
+  margin-top: 1.5%;
+  justify-content: space-between;
+}
+
+.ArticleContent {
+  margin-left: 3%;
+  padding-right: 2%;
+  max-width: 75%;
+}
+
+.WebTitle {
+  font-size: 250%;
+  margin-left: 1.5%;
+  border-bottom: 2px teal solid;
+  padding-right: 5%;
+}
+
+.Buttons {
+  margin-right: 1.5%;
+  margin-top: 0.5%;
+  border-bottom: 2px teal solid;
+  padding-bottom: 0.25%;
+  padding-left: 5%;
+}
+
+.ButtonsAndTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
 .TitleText {
-  width: 75%;
+  width: 80%;
+  height: 6vh;
 }
 
 .ContentText {
-  width: 75%;
+  width: 80%;
   height: 50vh;
 }
 
 .ArticleList {
-  margin-top: 1%;
+  border-left: 2px teal solid;
+  padding-left: 1%;
   display: flex;
+  margin-right: 3%;
   flex-direction: column;
+}
+
+.LinkHome {
+  color: white;
+}
+
+.LinkHome:hover {
+  color: white;
+  text-decoration-line: none;
+}
+
+.LinkAppearance {
+  font-size: 175%;
+}
+
+.LinkAppearance:hover {
+  text-decoration-line: none;
 }
