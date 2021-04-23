@@ -2,7 +2,7 @@ import "./App.css";
 import "rsuite/dist/styles/rsuite-default.css";
 import { Button, ButtonToolbar, Modal, Alert } from "rsuite";
 import React from "react";
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -13,6 +13,8 @@ class App extends React.Component {
     this.textChange = this.textChange.bind(this);
     this.closeNoResult = this.closeNoResult.bind(this);
     this.nukeLocal = this.nukeLocal.bind(this);
+    this.commentSubmit = this.commentSubmit.bind(this);
+    this.commentChange = this.commentChange.bind(this);
 
     this.state = {
       show: false,
@@ -34,6 +36,12 @@ class App extends React.Component {
     });
   }
 
+  commentChange(event) {
+    this.setState({
+      commentContent: event.target.value,
+    });
+  }
+
   nukeLocal() {
     Alert.error("localStorage has been nuked!");
     localStorage.clear();
@@ -42,8 +50,29 @@ class App extends React.Component {
 
   close() {
     Alert.success("Article Posted!");
-    localStorage.setItem(this.state.titleContent, this.state.textContent);
+    localStorage.setItem(
+      this.state.titleContent,
+      JSON.stringify({
+        textContent: this.state.textContent,
+        comments: JSON.stringify([]),
+      })
+    );
     this.setState({ show: false });
+  }
+
+  commentSubmit(key) {
+    let articleContent = JSON.parse(localStorage[key]).textContent;
+    let commentsContent = JSON.parse(JSON.parse(localStorage[key]).comments);
+    commentsContent.push(this.state.commentContent);
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        comments: JSON.stringify(commentsContent),
+        textContent: articleContent,
+      })
+    );
+
+    this.setState({ commentContent: "" });
   }
 
   closeNoResult() {
@@ -59,6 +88,7 @@ class App extends React.Component {
     });
   }
   render() {
+    document.body.style = "background-color: lightgrey";
     return (
       <div className="App">
         <BrowserRouter>
@@ -106,14 +136,45 @@ class App extends React.Component {
 
           <div className="ArticleZone">
             <div className="ArticleContent">
-              {Object.keys(localStorage).map((key) => {
-                return (
-                  <Route exact path={"/" + key}>
-                    <h1 className="ArticleTitle">{key}</h1>
-                    <div className="ArticleText">{localStorage[key]}</div>
-                  </Route>
-                );
-              })}
+              <Switch>
+                {Object.keys(localStorage).map((key) => {
+                  return (
+                    <Route exact path={"/" + key}>
+                      <h1 className="ArticleTitle">{key}</h1>
+                      <div className="ArticleText">
+                        {JSON.parse(localStorage[key]).textContent}
+                      </div>
+                      <div className="CommentSection">
+                        <h3>Comments</h3>
+                        {JSON.parse(JSON.parse(localStorage[key]).comments).map(
+                          (comm) => {
+                            return <div className="Comment">{comm}</div>;
+                          }
+                        )}
+                      </div>
+                      <div className="CommentSubmit">
+                        <h3>Leave a comment</h3>
+                        <textarea
+                          placeholder="Write your comment here"
+                          onChange={this.commentChange}
+                        ></textarea>
+                        <Button
+                          className="SubmitButton"
+                          onClick={() => {
+                            this.commentSubmit(key);
+                          }}
+                          appearance="primary"
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </Route>
+                  );
+                })}
+                <Route>
+                  <h1 className="ArticleTitle">Pick an article</h1>
+                </Route>
+              </Switch>
             </div>
 
             <div className="ArticleList">

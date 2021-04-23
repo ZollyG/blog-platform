@@ -2,8 +2,10 @@
   margin-left: 2.5%;
   margin-right: 2.5%;
   color: darkgoldenrod;
-  background-color: lightgreen;
+  background-color: white;
   min-height: 98vh;
+  max-width: 94vw;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px 5px;
   border-radius: 4px;
   padding-bottom: 1%;
 }
@@ -18,26 +20,28 @@
   margin-left: 3%;
   padding-right: 2%;
   max-width: 75%;
+  padding-left: 1%;
+  color: black;
 }
 
 .WebTitle {
   font-size: 250%;
   margin-left: 1.5%;
-  border-bottom: 2px teal solid;
-  padding-right: 5%;
+  user-select: none;
 }
 
 .Buttons {
   margin-right: 1.5%;
   margin-top: 0.5%;
-  border-bottom: 2px teal solid;
-  padding-bottom: 0.25%;
   padding-left: 5%;
 }
 
 .ButtonsAndTitle {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
+  background-color: darkgreen;
 }
 
 .TitleText {
@@ -48,6 +52,12 @@
 .ContentText {
   width: 80%;
   height: 50vh;
+}
+
+.ArticleTitle {
+  min-width: 50vw;
+  max-width: 50vw;
+  border-bottom: 2px teal solid;
 }
 
 .ArticleList {
@@ -73,4 +83,37 @@
 
 .LinkAppearance:hover {
   text-decoration-line: none;
+}
+
+.ArticleText {
+  margin-top: 1.5%;
+  white-space: pre-wrap;
+}
+
+.CommentSubmit {
+  max-width: 25vw;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.CommentSection {
+  border-top: 2px teal solid;
+  min-width: 50vw;
+  max-width: 50vw;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Comment {
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+  padding-left: 0.5%;
+  border-left: 1px teal solid;
+  white-space: pre-wrap;
+}
+
+.SubmitButton {
+  margin-top: 1.25%;
 }
