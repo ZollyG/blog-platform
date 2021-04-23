@@ -28,6 +28,7 @@
   font-size: 250%;
   margin-left: 1.5%;
   user-select: none;
+  color: antiquewhite;
 }
 
 .Buttons {
@@ -77,11 +78,20 @@
   text-decoration-line: none;
 }
 
+.LinkHome:focus {
+  color: white;
+  text-decoration-line: none;
+}
+
 .LinkAppearance {
-  font-size: 175%;
+  font-size: 125%;
 }
 
 .LinkAppearance:hover {
+  text-decoration-line: none;
+}
+
+.LinkAppearance:focus {
   text-decoration-line: none;
 }
 

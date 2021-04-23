@@ -61,6 +61,10 @@ class App extends React.Component {
   }
 
   commentSubmit(key) {
+    if (!this.state.commentContent) {
+      Alert.error("No comment posted!");
+      return;
+    }
     let articleContent = JSON.parse(localStorage[key]).textContent;
     let commentsContent = JSON.parse(JSON.parse(localStorage[key]).comments);
     commentsContent.push(this.state.commentContent);
@@ -155,6 +159,7 @@ class App extends React.Component {
                       <div className="CommentSubmit">
                         <h3>Leave a comment</h3>
                         <textarea
+                          id="CommentInput"
                           placeholder="Write your comment here"
                           onChange={this.commentChange}
                         ></textarea>
