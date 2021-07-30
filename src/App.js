@@ -3,6 +3,7 @@ import "rsuite/dist/styles/rsuite-default.css";
 import { Button, ButtonToolbar, Modal, Alert } from "rsuite";
 import React from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 class App extends React.Component {
   constructor(props) {
@@ -95,6 +96,9 @@ class App extends React.Component {
     document.body.style = "background-color: lightgrey";
     return (
       <div className="App">
+        <Helmet>
+          <title>blog-platform</title>
+        </Helmet>
         <BrowserRouter>
           <div className="ButtonsAndTitle">
             <div className="WebTitle">Blog platform</div>
